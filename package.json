@@ -9,7 +9,9 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onCommand:workbench.action.files.save"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
