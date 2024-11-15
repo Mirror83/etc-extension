@@ -1,27 +1,22 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
+let numberOfSaves = 0;
+
+// This method is called when the extension is activated
+// The extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-  // Use the console to output diagnostic information (console.log) and errors (console.error)
-  // This line of code will only be executed once when your extension is activated
-  // console.log("The ETC extension is now active!");
-
   vscode.window.showInformationMessage("The ETC extension is now active!");
-
-  // The command has been defined in the package.json file
-  // Now provide the implementation of the command with registerCommand
-  // The commandId parameter must match the command field in package.json
-  const disposable = vscode.commands.registerCommand("etc.greeting", () => {
-    // The code you place here will be executed every time your command is executed
-    // Display a message box to the user
-    vscode.window.showInformationMessage("Hello VS Code!");
+  const afterSave = vscode.workspace.onDidSaveTextDocument((e) => {
+    console.info("Number of saves: ", ++numberOfSaves);
+    let message = "";
+    if (numberOfSaves % 10 === 0) {
+      message = `ETC?`;
+      vscode.window.showInformationMessage(message);
+    }
   });
 
-  context.subscriptions.push(disposable);
+  context.subscriptions.push(afterSave);
 }
 
-// This method is called when your extension is deactivated
+// This method is called when the extension is deactivated
 export function deactivate() {}
